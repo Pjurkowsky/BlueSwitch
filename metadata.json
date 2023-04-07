@@ -1,0 +1,8 @@
+{
+  "name": "blueSwtich",
+  "description": "Switch two bluetooth devices",
+  "uuid": "blueSwtich@pjurkowsky.com",
+  "shell-version": [
+    "3.36"
+  ]
+}
