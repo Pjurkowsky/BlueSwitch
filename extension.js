@@ -36,9 +36,12 @@ const MyPopup = GObject.registerClass(
         if (checkStatus(device1)) {
           deactivateDevice(device1);
           activateDevice(device2);
-        } else {
+        } else if (checkStatus(device2)) {
           deactivateDevice(device2);
           activateDevice(device1);
+        } else {
+          activateDevice(device1);
+          activateDevice(device2);
         }
       });
       this.menu.connect("open-state-changed", updateIcon);
