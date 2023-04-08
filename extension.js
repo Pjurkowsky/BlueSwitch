@@ -104,6 +104,7 @@ function enable() {
   if (!checkStatus("00:1B:66:0E:42:76")) {
     activateDevice("0C:AE:BD:B9:AF:81");
   }
+  updateIcon();
 }
 
 function disable() {
