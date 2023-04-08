@@ -22,7 +22,10 @@ const MyPopup = GObject.registerClass(
   class MyPopup extends PanelMenu.Button {
     _init() {
       super._init(0);
-      this.icon = speakerIcon;
+      this.icon = new St.Icon({
+        gicon: Gio.icon_new_for_string(Me.dir.get_path() + "/speaker.svg"),
+        style_class: "system-status-icon",
+      });
       this.add_child(this.icon);
 
       let item = new PopupMenu.PopupMenuItem("Switch Bluetooth Devices");
@@ -78,6 +81,7 @@ function activateDevice(device) {
     let [res, out, err, status] = Glib.spawn_command_line_sync(
       "bluetoothctl connect " + device
     );
+    updateIcon();
     log(out);
   }
 }
@@ -87,6 +91,7 @@ function deactivateDevice(device) {
     let [res, out, err, status] = Glib.spawn_command_line_sync(
       "bluetoothctl disconnect " + device
     );
+    updateIcon();
     log(out);
   }
 }
@@ -96,7 +101,9 @@ function init() {}
 function enable() {
   myPopup = new MyPopup();
   Main.panel.addToStatusArea("myPopup", myPopup, 1);
-  activateDevice("0C:AE:BD:B9:AF:81");
+  if (!checkStatus("00:1B:66:0E:42:76")) {
+    activateDevice("0C:AE:BD:B9:AF:81");
+  }
 }
 
 function disable() {
